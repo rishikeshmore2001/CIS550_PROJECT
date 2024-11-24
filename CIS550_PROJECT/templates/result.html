@@ -11,11 +11,10 @@
     <p><strong>Minimal support:</strong> {{ min_support }}</p>
 
     <h2>Frequent Itemsets:</h2>
-    <p>
-        {{
-            frequent_itemsets | map("{{{}}}".format) | join(",")
-        }}
-    </p>
+    <p>{{ frequent_itemsets | join(", ") }}</p>
+
+    <h2>Maximal Frequent Itemsets:</h2>
+    <p>{{ maximal_itemsets | join(", ") }}</p>
 
     <h2>End - total items: {{ total_items }}</h2>
     <p><strong>Total running time:</strong> {{ runtime }} seconds</p>
@@ -23,4 +22,3 @@
     <a href="/">Back to Home</a>
 </body>
 </html>
-
