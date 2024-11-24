@@ -6,20 +6,21 @@
     <title>Apriori Results</title>
 </head>
 <body>
-    <h1>Apriori Algorithm Results</h1>
-    <p><strong>Total Runtime:</strong> {{ runtime }} seconds</p>
-    <h2>Frequent Itemsets</h2>
-    <ul>
-        {% for itemset in frequent %}
-        <li>{{ itemset }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Maximal Frequent Itemsets</h2>
-    <ul>
-        {% for itemset in maximal %}
-        <li>{{ itemset }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Data Mining Apriori Algorithm at Google App Engine</h1>
+    <p><strong>Input file:</strong> {{ input_file }}</p>
+    <p><strong>Minimal support:</strong> {{ min_support }}</p>
+
+    <h2>Frequent Itemsets:</h2>
+    <p>
+        {{
+            frequent_itemsets | map("{{{}}}".format) | join(",")
+        }}
+    </p>
+
+    <h2>End - total items: {{ total_items }}</h2>
+    <p><strong>Total running time:</strong> {{ runtime }} seconds</p>
+
     <a href="/">Back to Home</a>
 </body>
 </html>
+
