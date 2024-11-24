@@ -9,10 +9,13 @@ def load_transactions(file):
     :return: List of sets, where each set is a transaction.
     """
     transactions = []
-    reader = csv.reader(file)
+    # Decode the binary file into a text stream
+    text_stream = file.read().decode('utf-8').splitlines()
+    reader = csv.reader(text_stream)
     for row in reader:
         transactions.append(set(row))
     return transactions
+
 
 def get_frequent_1_itemsets(transactions, min_support):
     """
