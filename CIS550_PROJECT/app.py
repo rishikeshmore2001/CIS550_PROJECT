@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request
-from apriori import load_transactions, apriori, get_maximal_frequent_itemsets
+from apriori import load_transactions, apriori, format_output
 import time
 
-# Initialize Flask app (Make sure this line is here)
 app = Flask(__name__)
 
 @app.route('/')
@@ -24,23 +23,18 @@ def run_apriori():
     
     # Run Apriori algorithm
     frequent_itemsets = apriori(transactions, min_support)
-    maximal_frequent_itemsets = get_maximal_frequent_itemsets(frequent_itemsets)
     
     # Calculate runtime
     runtime = time.time() - start_time
     
-    # Prepare frequent itemsets in the desired format
-    formatted_itemsets = [f"{{{','.join(map(str, itemset))}}}" for itemset in frequent_itemsets]
-    
-    # Prepare maximal itemsets in the desired format
-    formatted_maximal_itemsets = [f"{{{','.join(map(str, itemset))}}}" for itemset in maximal_frequent_itemsets]
+    # Format frequent itemsets to match output
+    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset)))}}}" for itemset in sorted(frequent_itemsets, key=lambda x: (len(x), x))]
     
     return render_template(
         'result.html',
         input_file=input_filename,
         min_support=min_support,
         frequent_itemsets=formatted_itemsets,
-        maximal_itemsets=formatted_maximal_itemsets,
         total_items=len(frequent_itemsets),
         runtime=round(runtime, 6)
     )
