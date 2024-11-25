@@ -37,7 +37,7 @@ def run_apriori():
     maximal_items.sort(key=lambda x:(len(x), x))
     
     # Format frequent itemsets to match output
-    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset)))}}}" for itemset in maximal_items]
+    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset))).strip()}}}" for itemset in maximal_items]
     result_string = "{" + "".join(formatted_itemsets) + "}"
     
     return render_template(
@@ -48,11 +48,6 @@ def run_apriori():
         total_items=len(maximal_items),
         runtime=round(runtime, 6)
     )
-
-# Add this block to ensure the app runs
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
 
 # Add this block to ensure the app runs
 if __name__ == '__main__':
