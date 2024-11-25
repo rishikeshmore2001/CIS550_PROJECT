@@ -60,6 +60,15 @@ def load_transactions(file):
         transactions.append(set(map(int, row)))  # Convert each row into a set of integers
     return transactions
 
+def get_max_frequentItems(frequent_itemsets):
+    """Finds the maximal frequent itemsets."""
+    maximal_items = []
+    for items in sorted(frequent_itemsets, key=len, reverse=True):
+        if not any(set(items).issubset(set(max_item)) for max_item in maximal_items):
+            maximal_items.append(items)
+    return maximal_items
+
+
 def format_output(frequent_itemsets, input_file, min_support):
     """Formats output according to the specified format."""
     print(f"Input file: {input_file}")
