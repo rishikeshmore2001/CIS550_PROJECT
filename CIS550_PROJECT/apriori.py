@@ -1,6 +1,5 @@
-import sys
 import csv
-from itertools import combinations, chain  # Added chain here
+from itertools import combinations, chain
 from collections import defaultdict
 
 def find_frequent_1_itemsets(transactions, min_support):
@@ -68,7 +67,8 @@ def format_output(frequent_itemsets, input_file, min_support):
     print(formatted_output)
     print(f"End - total items: {len(frequent_itemsets)}")
 
-if _name_ == '_main_':
+# Fix the typo: change _name_ to __name__
+if __name__ == '__main__':
     # Parsing command line arguments
     import argparse
     parser = argparse.ArgumentParser()
@@ -85,3 +85,4 @@ if _name_ == '_main_':
 
     # Format and print output
     format_output(frequent_itemsets, args.input_file, min_support)
+
