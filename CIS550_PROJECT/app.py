@@ -33,4 +33,3 @@ def run_apriori():
         total_items=len(frequent_itemsets),
         runtime=round(runtime, 6)
     )
-
