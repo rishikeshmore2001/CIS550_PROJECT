@@ -73,9 +73,11 @@ def format_output(frequent_itemsets, input_file, min_support):
     """Formats output according to the specified format."""
     print(f"Input file: {input_file}")
     print(f"Minimal support: {min_support}")
-    formatted_output = "{{" + "}{".join(",".join(map(str, sorted(itemset))) for itemset in sorted(frequent_itemsets, key=lambda x: (len(x), x))) + "}}"
-    print(formatted_output)
-    print(f"End - total items: {len(frequent_itemsets)}")
+    maximal_items = get_max_frequentItems(frequent_itemsets)
+    maximal_items.sort(key=lambda x:(len(x), x))
+    # Format frequent itemsets to match output
+    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset)))}}}" for itemset in maximal_items]
+    result_string = "{" + "".join(formatted_itemsets) + "}"
 
 # Fix the typo: change _name_ to __name__
 if __name__ == '__main__':
