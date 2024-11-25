@@ -50,13 +50,14 @@ def apriori(transactions, min_support):
         k += 1
     return set(chain.from_iterable(L))
 
-def load_transactions(file_name):
-    """Loads transactions from a CSV file."""
+def load_transactions(file):
+    """Loads transactions from a FileStorage object."""
     transactions = []
-    with open(file_name, 'r') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            transactions.append(set(map(int, row)))
+    # Read the file content directly from the FileStorage object
+    file_content = file.read().decode('utf-8').splitlines()
+    reader = csv.reader(file_content)
+    for row in reader:
+        transactions.append(set(map(int, row)))  # Convert each row into a set of integers
     return transactions
 
 def format_output(frequent_itemsets, input_file, min_support):
@@ -85,4 +86,5 @@ if __name__ == '__main__':
 
     # Format and print output
     format_output(frequent_itemsets, args.input_file, min_support)
+
 
