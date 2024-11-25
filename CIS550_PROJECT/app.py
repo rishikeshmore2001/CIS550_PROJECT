@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from apriori import load_transactions, apriori, format_output
+from apriori import load_transactions, apriori
 import time
 
 app = Flask(__name__)
@@ -38,6 +38,11 @@ def run_apriori():
         total_items=len(frequent_itemsets),
         runtime=round(runtime, 6)
     )
+
+# Add this block to ensure the app runs
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
 
 # Add this block to ensure the app runs
 if __name__ == '__main__':
