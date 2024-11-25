@@ -16,12 +16,9 @@ def apriori_gen(frequent_itemsets, k):
     itemsets = list(frequent_itemsets)
     for i in range(len(itemsets)):
         for j in range(i + 1, len(itemsets)):
-            l1, l2 = list(itemsets[i]), list(itemsets[j])
-            # Join step: if the first k-2 items are equal, combine to form a k-itemset
-            if l1[:k-2] == l2[:k-2] and l1[k-2] < l2[k-2]:
-                candidate = frozenset(itemsets[i] | itemsets[j])
-                if not has_infrequent_subset(candidate, frequent_itemsets):
-                    candidates.add(candidate)
+            join_set = itemsets[i] | itemsets[j]
+            if len(join_set) == k and not has_infrequent_subset(union_set, itemsets):
+               candidates.add(join_set)
     return candidates
 
 def has_infrequent_subset(candidate, frequent_itemsets):
