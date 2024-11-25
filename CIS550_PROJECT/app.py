@@ -4,6 +4,13 @@ import time
 
 app = Flask(__name__)
 
+def get_max_frequentItems(frequent_itemsets):
+    max = []
+    for items in sorted(frequent_itemsets,key=len, reverse=true):
+        if not any(set(items).issubset(set(max_items)) for max_items in max):
+            max.append(items)
+    return max
+    
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -26,16 +33,19 @@ def run_apriori():
     
     # Calculate runtime
     runtime = time.time() - start_time
+    maximal_items = get_max_frequentItems(frequent_itemsets)
+    maximal_items.sort(key=lambda x:(len(x), x))
     
     # Format frequent itemsets to match output
-    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset)))}}}" for itemset in sorted(frequent_itemsets, key=lambda x: (len(x), x))]
+    formatted_itemsets = [f"{{{','.join(map(str, sorted(itemset)))}}}" for itemset in maximal_items]
+    result_string = "{" + "".join(formatted_itemsets) + "}"
     
     return render_template(
         'result.html',
         input_file=input_filename,
         min_support=min_support,
-        frequent_itemsets=formatted_itemsets,
-        total_items=len(frequent_itemsets),
+        frequent_itemsets=result_string,
+        total_items=len(maximal_items),
         runtime=round(runtime, 6)
     )
 
