@@ -96,6 +96,6 @@ if __name__ == '__main__':
     frequent_itemsets = apriori(transactions, min_support)
 
     # Format and print output
-    format_output(frequent_itemsets, args.input_file, min_support)
+    # format_output(frequent_itemsets, args.input_file, min_support)
 
 
