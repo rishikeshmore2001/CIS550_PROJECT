@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request
-from apriori import load_transactions, apriori
+from apriori import load_transactions, apriori, get_max_frequentItems
 import time
 
 app = Flask(__name__)
 
-def get_max_frequentItems(frequent_itemsets):
-    max = []
-    for items in sorted(frequent_itemsets,key=len, reverse=true):
-        if not any(set(items).issubset(set(max_items)) for max_items in max):
-            max.append(items)
-    return max
+# def get_max_frequentItems(frequent_itemsets):
+#     max = []
+#     for items in sorted(frequent_itemsets,key=len, reverse=true):
+#         if not any(set(items).issubset(set(max_items)) for max_items in max):
+#             max.append(items)
+#     return max
     
 @app.route('/')
 def index():
