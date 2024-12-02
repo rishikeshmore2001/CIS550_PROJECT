@@ -13,13 +13,18 @@ def find_frequent_1_itemsets(transactions, min_support):
 def apriori_gen(frequent_itemsets, k):
     """Generates candidate k-itemsets from the previous (k-1)-itemsets."""
     candidates = set()
-    itemsets = list(frequent_itemsets)
+    itemsets = sorted(list(frequent_itemsets))  # Sort itemsets to ensure proper combinations
     for i in range(len(itemsets)):
         for j in range(i + 1, len(itemsets)):
-            join_set = itemsets[i] | itemsets[j]
-            if len(join_set) == k and not has_infrequent_subset(union_set, itemsets):
-               candidates.add(join_set)
+            l1, l2 = list(itemsets[i]), list(itemsets[j])
+            # Join step: Combine sets if the first k-1 items match
+            if l1[:k-1] == l2[:k-1]:  # Check first k-1 items
+                candidate = frozenset(itemsets[i] | itemsets[j])
+                # Prune step: Check if all subsets of candidate are frequent
+                if len(candidate) == k and all(frozenset(subset) in frequent_itemsets for subset in combinations(candidate, k - 1)):
+                    candidates.add(candidate)
     return candidates
+
 
 def has_infrequent_subset(candidate, frequent_itemsets):
     """Checks if any subset of the candidate is not frequent."""
